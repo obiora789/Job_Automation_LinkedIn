@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/../CookieClicker/.idea/CookieClicker.iml" filepath="$PROJECT_DIR$/../CookieClicker/.idea/CookieClicker.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../.idea/Documents.iml" filepath="$PROJECT_DIR$/../.idea/Documents.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Job_Automation.iml" filepath="$PROJECT_DIR$/.idea/Job_Automation.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../Scraping_Billboard_100/.idea/Scraping_Billboard_100.iml" filepath="$PROJECT_DIR$/../Scraping_Billboard_100/.idea/Scraping_Billboard_100.iml" />
+    </modules>
+  </component>
+</project>
