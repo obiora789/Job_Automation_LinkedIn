@@ -1,15 +1,17 @@
+import os
+import random
+import time
+import dotenv
+# import undetected_chromedriver as uc
 from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException, ElementClickInterceptedException
-from selenium.webdriver.support.select import Select
-from selenium.webdriver.common.by import By
+from selenium.common.exceptions import NoSuchElementException, ElementNotInteractableException, \
+    ElementClickInterceptedException
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.action_chains import ActionChains, ScrollOrigin
-import dotenv
-import os
-import time
-import random
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.select import Select
+from selenium.webdriver.support.ui import WebDriverWait
 
 new_file = dotenv.find_dotenv()
 dotenv.load_dotenv(new_file)
@@ -85,7 +87,7 @@ def select_cv():
 
 
 options = webdriver.ChromeOptions()
-options.add_argument("window-size=1200x600")
+#options.add_argument("window-size=1200x600")
 options.add_argument("disable-infobars")
 options.add_argument("--disable-extensions")
 with webdriver.Chrome(service=SERVICE, options=options) as driver:
@@ -125,17 +127,21 @@ with webdriver.Chrome(service=SERVICE, options=options) as driver:
             continue
         else:
             time.sleep(DELAY - generate_random_time(LONG))
-            options = driver.find_elements(By.TAG_NAME, 'select')   # to access list of country codes
-            num_options = len(options)
-            for index in range(num_options):
-                if index == 1:
-                    dropdown = Select(options[1])
-                    dropdown.select_by_visible_text("United States (+1)")   # selects United States country code
-            driver.implicitly_wait(DELAY - generate_random_time(SHORT))
-            mobile_phone = driver.find_element(By.CLASS_NAME, "artdeco-text-input--input")
-            if mobile_phone.get_attribute("value") != MOBILE_NUMBER:    # confirms the mobile number to be entered
-                mobile_phone.send_keys(MOBILE_NUMBER)   # if true, it sends the phone number
-            next_step = driver.find_element(By.CLASS_NAME, "artdeco-button--primary")
+            try:
+                options = driver.find_elements(By.TAG_NAME, 'select')   # to access list of country codes
+                num_options = len(options)
+                for index in range(num_options):
+                    if index == 1:
+                        dropdown = Select(options[1])
+                        dropdown.select_by_visible_text("United States (+1)")   # selects United States country code
+                driver.implicitly_wait(DELAY - generate_random_time(SHORT))
+                mobile_phone = driver.find_element(By.CLASS_NAME, "artdeco-text-input--input")
+                if mobile_phone.get_attribute("value") != MOBILE_NUMBER:    # confirms the mobile number to be entered
+                    mobile_phone.send_keys(MOBILE_NUMBER)   # if true, it sends the phone number
+                next_step = driver.find_element(By.CLASS_NAME, "artdeco-button--primary")
+            except NoSuchElementException:
+                close_application()
+                continue
             if "Submit" in next_step.text:  # checks for the submit button
                 select_cv()
                 submit_application()
